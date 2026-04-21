@@ -1,6 +1,6 @@
-package com.selenium.practice.tests;
+package rahulshettyacademy.tests;
 
-import com.selenium.practice.base.BaseTest;
+import rahulshettyacademy.TestComponents.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
