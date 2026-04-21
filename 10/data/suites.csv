@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1704","submitOrder","Suite","Tue Apr 21 21:17:00 UTC 2026","broken","Tue Apr 21 21:17:02 UTC 2026","rahulshettyacademy.tests.SubmitOrderTest","Submit Order Test","rahulshettyacademy.tests.SubmitOrderTest","submitOrder"
+"","1338","LoginErrorValidation","Suite","Tue Apr 21 21:17:06 UTC 2026","broken","Tue Apr 21 21:17:07 UTC 2026","rahulshettyacademy.tests.ErrorValidationsTest","Error Validations Test","rahulshettyacademy.tests.ErrorValidationsTest","LoginErrorValidation"
+"","0","OrderHistoryTest","Suite","Tue Apr 21 21:17:07 UTC 2026","skipped","Tue Apr 21 21:17:07 UTC 2026","rahulshettyacademy.tests.SubmitOrderTest","Submit Order Test","rahulshettyacademy.tests.SubmitOrderTest","OrderHistoryTest"
+"","1340","ProductErrorValidation","Suite","Tue Apr 21 21:17:11 UTC 2026","broken","Tue Apr 21 21:17:12 UTC 2026","rahulshettyacademy.tests.ErrorValidationsTest","Error Validations Test","rahulshettyacademy.tests.ErrorValidationsTest","ProductErrorValidation"
+"","1329","submitOrder","Suite","Tue Apr 21 21:17:06 UTC 2026","broken","Tue Apr 21 21:17:07 UTC 2026","rahulshettyacademy.tests.SubmitOrderTest","Submit Order Test","rahulshettyacademy.tests.SubmitOrderTest","submitOrder"
