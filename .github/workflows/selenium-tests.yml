@@ -18,7 +18,10 @@ jobs:
     - name: Install Chrome
       uses: browser-actions/setup-chrome@v1
     - name: Run Selenium tests headless
-      run: mvn test -Dbrowser=chrome_headless
+      run: mvn test -Dbrowser=chrome_headless -Dsurefire.useFile=false
+    - name: Print dump files
+      if: always()
+      run: find . -name "*.dumpstream" -exec cat {} \;
     - name: Get Allure history
       uses: actions/checkout@v4
       if: always()
