@@ -1,10 +1,7 @@
 package rahulshettyacademy.TestComponents;
 
-import org.testng.annotations.AfterMethod;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -32,92 +29,76 @@ import rahulshettyacademy.pageobjects.LandingPage;
 
 public class BaseTest {
 
-	public WebDriver driver;
-	public LandingPage landingPage;
+    public WebDriver driver;
+    public LandingPage landingPage;
 
-	public WebDriver initializeDriver() throws IOException
+    public WebDriver initializeDriver() throws IOException {
 
-	{
-		// properties class
+        Properties prop = new Properties();
+        FileInputStream fis = new FileInputStream(System.getProperty("user.dir")
+                + "//src//main//java//rahulshettyacademy//resources//GlobalData.properties");
+        prop.load(fis);
 
-		 Properties prop = new Properties();
-		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")
-				+ "//src//main//java//rahulshettyacademy//resources//GlobalData.properties");
-		prop.load(fis);
-		
-		String browserName = System.getProperty("browser")!=null ? System.getProperty("browser") :prop.getProperty("browser");
-		//prop.getProperty("browser");
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
 
-		if (browserName.contains("chrome")) {
-			ChromeOptions options = new ChromeOptions();
-			WebDriverManager.chromedriver().setup();
-			if(browserName.contains("headless")){
-			options.addArguments("headless");
-			}		
-			driver = new ChromeDriver(options);
-			driver.manage().window().setSize(new Dimension(1440,900));//full screen
+        if (browserName.contains("chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            WebDriverManager.chromedriver().setup();
+            if (browserName.contains("headless")) {
+                options.addArguments("--headless");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1440,900");
+            }
+            driver = new ChromeDriver(options);
+            driver.manage().window().setSize(new Dimension(1440, 900));
 
-		} else if (browserName.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.driver",
-					"/Users/rahulshetty//documents//geckodriver");
-			driver = new FirefoxDriver();
-			// Firefox
-		} else if (browserName.equalsIgnoreCase("edge")) {
-			// Edge
-			System.setProperty("webdriver.edge.driver", "edge.exe");
-			driver = new EdgeDriver();
-		}
+        } else if (browserName.equalsIgnoreCase("firefox")) {
+            System.setProperty("webdriver.gecko.driver",
+                    "/Users/rahulshetty//documents//geckodriver");
+            driver = new FirefoxDriver();
+        } else if (browserName.equalsIgnoreCase("edge")) {
+            System.setProperty("webdriver.edge.driver", "edge.exe");
+            driver = new EdgeDriver();
+        }
 
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-		return driver;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        return driver;
+    }
 
-	}
-	
-	public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException
-	{
-		//read json to string
-	String jsonContent = 	FileUtils.readFileToString(new File(filePath), 
-			StandardCharsets.UTF_8);
-	
-	//String to HashMap- Jackson Databind
-	
-	ObjectMapper mapper = new ObjectMapper();
-	  List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
-      });
-	  return data;
-	
-	//{map, map}
+    public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
+        String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+        ObjectMapper mapper = new ObjectMapper();
+        List<HashMap<String, String>> data = mapper.readValue(jsonContent,
+                new TypeReference<List<HashMap<String, String>>>() {});
+        return data;
+    }
 
-	}
-	
-	public String getScreenshot(String testCaseName,WebDriver driver) throws IOException
-	{
-		TakesScreenshot ts = (TakesScreenshot)driver;
-		File source = ts.getScreenshotAs(OutputType.FILE);
-		File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-		FileUtils.copyFile(source, file);
-		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
-		
-		
-	}
-	
-	@BeforeMethod(alwaysRun=true)
-	public LandingPage launchApplication() throws IOException
-	{
-		
-		 driver = initializeDriver();
-		  landingPage = new LandingPage(driver);
-		landingPage.goTo();
-		return landingPage;
-	
-		
-	}
-	
-	@AfterMethod(alwaysRun=true)
-	
-	public void tearDown()
-	{
-		driver.close();
-	}
+    public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+        // Create reports directory if it doesn't exist
+        File reportsDir = new File(System.getProperty("user.dir") + "//reports");
+        if (!reportsDir.exists()) {
+            reportsDir.mkdirs();
+        }
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+        FileUtils.copyFile(source, file);
+        return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public LandingPage launchApplication() throws IOException {
+        driver = initializeDriver();
+        landingPage = new LandingPage(driver);
+        landingPage.goTo();
+        return landingPage;
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        driver.close();
+    }
 }
