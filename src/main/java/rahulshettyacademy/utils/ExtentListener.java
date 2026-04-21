@@ -1,15 +1,14 @@
 package com.selenium.practice.utils;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
 public class ExtentListener implements ITestListener {
     ExtentReports extent = ExtentManager.getReports();
     ExtentTest test;
-
+    @Override
+    public void onStart(ITestContext context) {}
     @Override
     public void onTestStart(ITestResult result) {
         test = extent.createTest(result.getMethod().getMethodName());
@@ -22,6 +21,10 @@ public class ExtentListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         test.fail(result.getThrowable());
     }
+    @Override
+    public void onTestSkipped(ITestResult result) {}
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {}
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();
