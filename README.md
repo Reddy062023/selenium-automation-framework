@@ -94,3 +94,9 @@ GitHub: https://github.com/Reddy062023
 
 "@ | Out-File -FilePath "C:\\selenium-automation-framework\\README.md" -Encoding utf8
 
+
+---
+Built by Japendra
+Portfolio: https://Reddy062023.github.io
+GitHub: https://github.com/Reddy062023
+Contact: japendras06@gmail.com
